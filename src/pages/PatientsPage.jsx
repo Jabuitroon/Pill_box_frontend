@@ -98,7 +98,7 @@ export default function PatientsPage() {
     }
     if (form.password) payload.password = form.password
     try {
-      await patientsApi.update(selectedPatient.id, payload)
+      await patientsApi.update(selectedPatient.user_id, payload)
       toast.success('Paciente actualizado correctamente')
       setEditOpen(false)
       fetchPatients()
@@ -118,7 +118,7 @@ export default function PatientsPage() {
   const handleDelete = async () => {
     setSubmitting(true)
     try {
-      await patientsApi.delete(selectedPatient.id)
+      await patientsApi.delete(selectedPatient.user_id)
       toast.success('Paciente eliminado')
       setDeleteOpen(false)
       fetchPatients()
@@ -216,12 +216,12 @@ export default function PatientsPage() {
             <tbody>
               {filtered.map((p, i) => (
                 <PatientRow
-                  key={p.id ?? i}
+                  key={p.user_id ?? i}
                   patient={p}
                   index={i}
                   onEdit={() => openEdit(p)}
                   onDelete={() => openDelete(p)}
-                  onView={() => navigate(`/patients/${p.id ?? p.user_id}`)}
+                  onView={() => navigate(`/patients/${p.user_id ?? p.user_id}`)}
                 />
               ))}
             </tbody>
@@ -329,7 +329,7 @@ function PatientRow({ patient, index, onEdit, onDelete, onView  }) {
               {patient.name} {patient.lastName}
             </p>
             <p className='text-xs text-white text-opacity-30 mt-0.5'>
-              ID: {patient.id?.slice(0, 8)}…
+              Id: {patient.user_id?.slice(0, 8)}…
             </p>
           </div>
         </div>

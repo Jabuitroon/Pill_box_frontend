@@ -81,26 +81,6 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Acciones rápidas */}
-      <section>
-        <h2 className="font-display font-semibold text-white text-lg mb-4">Acciones rápidas</h2>
-        <div className="grid grid-cols-3 gap-4">
-          {QUICK_ACTIONS.map(({ label, icon, to }) => (
-            <button
-              key={to}
-              onClick={() => navigate(to)}
-              className="glass-card p-5 flex flex-col items-center gap-3 hover:border-teal-500 hover:border-opacity-30
-                         transition-all duration-200 hover:scale-105 group"
-            >
-              <span className="text-3xl">{icon}</span>
-              <span className="text-sm font-medium text-white text-opacity-70 group-hover:text-opacity-100 transition-opacity">
-                {label}
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-
       {/* Panel de pastillas */}
       <section>
         <h2 className="font-display font-semibold text-white text-lg mb-4">

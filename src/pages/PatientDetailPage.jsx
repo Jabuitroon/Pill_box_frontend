@@ -55,8 +55,7 @@ const EMPTY_RX_FORM = {
 const SCHEDULE_OPTIONS = [
   { value: 'MORNING', label: 'Mañana', emoji: '🌅' },
   { value: 'AFTERNOON', label: 'Tarde', emoji: '☀️' },
-  { value: 'EVENING', label: 'Noche', emoji: '🌆' },
-  { value: 'NIGHT', label: 'Madrugada', emoji: '🌙' },
+  { value: 'NIGHT', label: 'Noche', emoji: '🌙' },
 ]
 
 export default function PatientDetailPage() {

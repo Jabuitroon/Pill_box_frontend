@@ -5,8 +5,6 @@ import PillCapsule from './PillCapsule'
 const NAV_LINKS = [
   { to: '/dashboard', label: 'Inicio', icon: HomeIcon },
   { to: '/patients', label: 'Pacientes', icon: UsersIcon },
-  { to: '/prescriptions', label: 'Recetas', icon: RxIcon },
-  { to: '/reminders', label: 'Recordatorios', icon: BellIcon },
   { to: '/pills', label: 'Pastillas', icon: PillNavIcon },
 ]
 
