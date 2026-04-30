@@ -1,6 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useAuthStore from '../store/authStore'
 import PillCapsule from './PillCapsule'
+import React, { useState } from 'react'
+import { Menu, X } from 'lucide-react'
 
 const NAV_LINKS = [
   { to: '/dashboard', label: 'Inicio', icon: HomeIcon },
@@ -12,6 +14,9 @@ export default function Navbar() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { logout, user } = useAuthStore()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleMenu = () => setIsOpen(!isOpen)
 
   const handleLogout = () => {
     logout()
@@ -19,73 +24,93 @@ export default function Navbar() {
   }
 
   return (
-    <aside className='fixed left-0 top-0 h-full w-64 bg-navy-800 border-r border-white border-opacity-5 flex flex-col z-40 animate-fade-in'>
-      {/* Logo */}
-      <div className='px-6 pt-7 pb-6 flex items-center gap-3'>
-        <PillCapsule color='teal' size='md' />
-        <div>
-          <h1 className='font-display font-bold text-lg leading-tight text-white'>
-            PillBox
-          </h1>
-          <p className='text-xs text-teal-400 font-medium tracking-wide'>
-            Hipertensión
-          </p>
+    <>
+      {/* Botón de activación (Hamburguesa) - Solo visible en móviles */}
+      <button
+        onClick={toggleMenu}
+        className='fixed top-4 left-4 z-50 p-2 bg-navy-800 text-white rounded-md sm:hidden border border-white/10'
+        aria-label='Toggle Menu'
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Overlay (Fondo oscuro) - Cierra el menú al hacer click fuera */}
+      {isOpen && (
+        <div
+          className='fixed inset-0 bg-black/50 z-30 sm:hidden'
+          onClick={toggleMenu}
+        />
+      )}
+      <aside
+        className={`fixed left-0 top-0 h-full sm:translate-x-0 flex w-64 bg-navy-800 border-r border-white border-opacity-5 flex-col z-40 animate-fade-in transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        {/* Logo */}
+        <div className='px-6 pt-7 pb-6 flex items-center gap-3'>
+          <PillCapsule color='teal' size='md' />
+          <div>
+            <h1 className='font-display font-bold text-lg leading-tight text-white'>
+              PillBox
+            </h1>
+            <p className='text-xs text-teal-400 font-medium tracking-wide'>
+              Hipertensión
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Divisor */}
-      <div className='mx-6 h-px bg-white bg-opacity-5 mb-4' />
+        {/* Divisor */}
+        <div className='mx-6 h-px bg-white bg-opacity-5 mb-4' />
 
-      {/* Nav links */}
-      <nav className='flex-1 px-4 space-y-1'>
-        {NAV_LINKS.map(({ to, label, icon: Icon }) => {
-          const active = pathname.startsWith(to)
-          return (
-            <Link
-              key={to}
-              to={to}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
+        {/* Nav links */}
+        <nav className='flex-1 px-4 space-y-1'>
+          {NAV_LINKS.map(({ to, label, icon: Icon }) => {
+            const active = pathname.startsWith(to)
+            return (
+              <Link
+                key={to}
+                to={to}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
                 ${
                   active
                     ? 'bg-teal-500 bg-opacity-15 text-teal-400 font-semibold'
                     : 'text-white text-opacity-50 hover:bg-white hover:bg-opacity-5 hover:text-opacity-90'
                 }`}
-            >
-              <Icon
-                className={`w-5 h-5 shrink-0 ${active ? 'text-teal-400' : ''}`}
-              />
-              <span className='text-sm'>{label}</span>
-              {active && (
-                <div className='ml-auto w-1.5 h-1.5 rounded-full bg-teal-400' />
-              )}
-            </Link>
-          )
-        })}
-      </nav>
+              >
+                <Icon
+                  className={`w-5 h-5 shrink-0 ${active ? 'text-teal-400' : ''}`}
+                />
+                <span className='text-sm'>{label}</span>
+                {active && (
+                  <div className='ml-auto w-1.5 h-1.5 rounded-full bg-teal-400' />
+                )}
+              </Link>
+            )
+          })}
+        </nav>
 
-      {/* User info + logout */}
-      <div className='px-4 pb-6'>
-        <div className='mx-2 h-px bg-white bg-opacity-5 mb-4' />
-        <div className='flex items-center gap-3 px-4 py-3 rounded-xl bg-navy-700 bg-opacity-50 mb-2'>
-          <div className='w-8 h-8 rounded-full bg-gradient-to-br from-teal-600 to-teal-400 flex items-center justify-center text-navy-900 font-bold text-sm shrink-0'>
-            {user?.name?.[0]?.toUpperCase() ?? 'F'}
+        {/* User info + logout */}
+        <div className='px-4 pb-6'>
+          <div className='mx-2 h-px bg-white bg-opacity-5 mb-4' />
+          <div className='flex items-center gap-3 px-4 py-3 rounded-xl bg-navy-700 bg-opacity-50 mb-2'>
+            <div className='w-8 h-8 rounded-full bg-gradient-to-br from-teal-600 to-teal-400 flex items-center justify-center text-navy-900 font-bold text-sm shrink-0'>
+              {user?.name?.[0]?.toUpperCase() ?? 'F'}
+            </div>
+            <div className='min-w-0'>
+              <p className='text-sm font-medium text-white truncate'>
+                {user?.name ?? 'Fisioterapeuta'}
+              </p>
+              <p className='text-xs text-teal-400'>Administrador</p>
+            </div>
           </div>
-          <div className='min-w-0'>
-            <p className='text-sm font-medium text-white truncate'>
-              {user?.name ?? 'Fisioterapeuta'}
-            </p>
-            <p className='text-xs text-teal-400'>Administrador</p>
-          </div>
+          <button
+            onClick={handleLogout}
+            className='w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-coral-400 hover:bg-coral-500 hover:bg-opacity-10 transition-all duration-200'
+          >
+            <LogoutIcon className='w-4 h-4' />
+            Cerrar sesión
+          </button>
         </div>
-        <button
-          onClick={handleLogout}
-          className='w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-coral-400 hover:bg-coral-500 hover:bg-opacity-10 transition-all duration-200'
-        >
-          <LogoutIcon className='w-4 h-4' />
-          Cerrar sesión
-        </button>
-      </div>
-    </aside>
+      </aside>
+    </>
   )
 }
 
@@ -161,9 +186,18 @@ function BellIcon({ className }) {
 
 function PillNavIcon({ className }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-      <path strokeLinecap="round" strokeLinejoin="round"
-        d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+    <svg
+      className={className}
+      fill='none'
+      viewBox='0 0 24 24'
+      stroke='currentColor'
+      strokeWidth={1.8}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3'
+      />
     </svg>
   )
 }

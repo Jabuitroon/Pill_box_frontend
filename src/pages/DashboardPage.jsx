@@ -55,7 +55,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-3 gap-4">
         <StatCard
           title="Pacientes Activos"
           value={loading ? '…' : patientCount ?? '—'}
