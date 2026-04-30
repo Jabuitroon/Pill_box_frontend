@@ -145,7 +145,7 @@ export default function PillsPage() {
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
           {filtered.map((pill, i) => (
             <PillCard
               key={pill.pill_id}

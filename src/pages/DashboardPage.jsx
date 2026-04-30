@@ -39,7 +39,7 @@ export default function DashboardPage() {
         <div>
           <p className="text-teal-400 font-medium text-sm mb-1">{greeting},</p>
           <h1 className="font-display font-bold text-3xl text-white">
-            {user?.name ?? 'Fisioterapeuta'} 👋
+            {user?.name ?? 'Admin'} 👋
           </h1>
           <p className="text-white text-opacity-40 text-sm mt-1">
             {new Date().toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
@@ -84,7 +84,7 @@ export default function DashboardPage() {
       {/* Panel de pastillas */}
       <section>
         <h2 className="font-display font-semibold text-white text-lg mb-4">
-          Paleta de medicamentos
+          Proximamente Paleta de medicamentos...
         </h2>
         <div className="glass-card p-6">
           <p className="text-white text-opacity-40 text-sm mb-5">
