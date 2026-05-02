@@ -1,6 +1,6 @@
 import useAuthStore from '../store/authStore'
 
-const BASE_URL = 'https://pill-box-henna.vercel.app'
+const BASE_URL = import.meta.env.VITE_API_URL
 
 /**
  * Cliente HTTP centralizado.
