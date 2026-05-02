@@ -60,26 +60,16 @@ export default function DashboardPage() {
             })}
           </p>
         </div>
-        <div className='flex gap-2'>
-          {PILL_COLORS.slice(0, 5).map((c, i) => (
-            <div
-              key={c}
-              style={{ animationDelay: `${i * 0.15}s` }}
-              className='animate-fade-in'
-            >
-              <PillCapsule color={c} size='sm' animate />
-            </div>
-          ))}
-        </div>
       </div>
 
       <div>
         <p className='font-display text-white text-lg mb-4'>
-          Esta app fue creada para pacientes con <span className='font-semibold'>HIPERTENSION</span> especialmente
+          Esta app fue creada para pacientes con{' '}
+          <span className='font-semibold'>HIPERTENSION</span> especialmente
           adultos mayores, con el fin de que no olviden tomar sus medicamentos.
         </p>
         <p className='text-teal-400 font-medium text-sm'>
-          By: Henry Emmanuel Murcia y Eileen Salomé Urquijo | Estudiantes de
+          By: HENRY EMMANUEL MURCIA y EILEEN SALOMÉ URQUIJO | Estudiantes de
           Fisioterapia de 4° semestre FUMC.
         </p>
       </div>
